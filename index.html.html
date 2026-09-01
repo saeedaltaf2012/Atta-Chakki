@@ -1129,7 +1129,7 @@ function sendWelcomeWhatsApp(customer) {
   const shop = appData.settings.shopName;
   const target = appData.settings.visitsForFree;
   const msg = 'Assalam-o-Alaikum ' + customer.name + '!\n\n' +
-    'Aapka *Digital Loyalty Card* Kataf Atta Chakki mein ban gaya hai! 🎉\n\n' +
+    'Aapka *Digital Loyalty Card* ' + shop + ' mein ban gaya hai! 🎉\n\n' +
     '*Hamara Offer:*\n' +
     '• Har *' + target + ' dafa* visit pe *1 dafa FREE Pisaai*!\n' +
     '• Aapka ID: *' + customer.id + '*\n\n' +
@@ -1226,7 +1226,7 @@ function sendWhatsAppReminder() {
   const remaining = getRemaining(stars, appData.settings.visitsForFree);
 
   let msg = 'Assalam-o-Alaikum ' + c.name + '!\n\n' +
-    '*Shukriya* ke aapne *Kataf Atta Chakki* ka intekhaab kiya! 🙏\n\n' +
+    '*Shukriya* ke aapne *' + shop + '* ka intekhaab kiya! 🙏\n\n' +
     'Aapko atta piswaye hue *' + days + ' din* ho gaye hain.\n' +
     'Ham aapke intezar mein hain! 🌾\n\n';
 
@@ -1239,7 +1239,7 @@ function sendWhatsAppReminder() {
   }
 
   msg += 'Aaj hi aayein aur apna hisaab update karein!\n\n' +
-    '*Kataf Atta Chakki*\n' +
+    '*' + shop + '*\n' +
     'Aapka bharosa, hamari pehchaan!';
   window.open(getWhatsAppLink(c.phone, msg), '_blank');
 }
@@ -1287,7 +1287,7 @@ function sendOverdueWhatsApp(id) {
   const remaining = getRemaining(stars, appData.settings.visitsForFree);
 
   let msg = 'Assalam-o-Alaikum ' + c.name + '!\n\n' +
-    '*Shukriya* ke aapne *Kataf Atta Chakki* ka intekhaab kiya! 🙏\n\n' +
+    '*Shukriya* ke aapne *' + shop + '* ka intekhaab kiya! 🙏\n\n' +
     'Aapko atta piswaye hue *' + days + ' din* ho gaye hain.\n' +
     'Ham aapke intezar mein hain! 🌾\n\n';
 
@@ -1300,7 +1300,7 @@ function sendOverdueWhatsApp(id) {
   }
 
   msg += 'Aaj hi aayein aur apna hisaab update karein!\n\n' +
-    '*Kataf Atta Chakki*\n' +
+    '*' + shop + '*\n' +
     'Aapka bharosa, hamari pehchaan!';
   window.open(getWhatsAppLink(c.phone, msg), '_blank');
 }
