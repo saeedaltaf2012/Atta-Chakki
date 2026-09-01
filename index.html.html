@@ -160,7 +160,7 @@ body { background:linear-gradient(135deg,#f5f5dc 0%,#e8dcc8 100%); min-height:10
 <div id="toast" class="toast"></div>
 
 <div class="app-header">
-  <h1>🌾 KATAF ATTA CHAKKI</h1>
+  <h1 id="app-title">🌾 KATAF ATTA CHAKKI</h1>
   <p>Owner Portal - Har 5 Visits = 1 FREE Pisaai</p>
 </div>
 
@@ -1331,6 +1331,12 @@ function loadSettings() {
   document.getElementById('setting-visits').value = appData.settings.visitsForFree;
   document.getElementById('setting-shop').value = appData.settings.shopName;
   document.getElementById('setting-phone').value = appData.settings.shopPhone;
+  updateAppTitle();
+}
+
+function updateAppTitle() {
+  const shopName = appData.settings.shopName || 'KATAF ATTA CHAKKI';
+  document.getElementById('app-title').textContent = '🌾 ' + shopName;
 }
 
 function saveSettings() {
@@ -1338,11 +1344,13 @@ function saveSettings() {
   const shop = document.getElementById('setting-shop').value.trim();
   const phone = document.getElementById('setting-phone').value.trim();
   if(!visits || visits < 1) { showToast('❌ Valid visits number dalen!'); return; }
+  if(!shop) { showToast('❌ Shop name zaroori hai!'); return; }
   appData.settings.visitsForFree = visits;
-  appData.settings.shopName = shop || 'Kataf Atta Chakki';
+  appData.settings.shopName = shop;
   appData.settings.shopPhone = phone;
   saveData();
-  showToast('✅ Settings save ho gayi!');
+  updateAppTitle();
+  showToast('✅ Settings save ho gayi! App title bhi update ho gayi!');
 }
 
 // ===================== EXPORT =====================
