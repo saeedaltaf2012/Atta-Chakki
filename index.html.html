@@ -307,6 +307,52 @@ body { background:linear-gradient(135deg,#f5f5dc 0%,#e8dcc8 100%); min-height:10
   </div>
 </div>
 
+<!-- REPORTS -->
+<div id="section-reports" class="section">
+  <div class="card">
+    <div class="card-title">📊 Monthly Sales Report</div>
+    <div class="input-row">
+      <div class="input-group"><label>Select Month</label><input type="month" id="report-month"></div>
+      <button class="btn btn-primary btn-small" onclick="renderMonthlyReport()" style="margin-bottom:0;white-space:nowrap;">View</button>
+      <button class="btn btn-gold btn-small" onclick="exportMonthlyReport()" style="margin-bottom:0;white-space:nowrap;">📥 Export</button>
+    </div>
+  </div>
+
+  <!-- Monthly Summary Cards -->
+  <div class="stats-grid">
+    <div class="stat-card green"><div class="stat-value" id="monthly-cash">Rs 0</div><div class="stat-label">Total Cash</div></div>
+    <div class="stat-card blue"><div class="stat-value" id="monthly-days">0</div><div class="stat-label">Days Worked</div></div>
+    <div class="stat-card gold"><div class="stat-value" id="monthly-avg">Rs 0</div><div class="stat-label">Daily Avg</div></div>
+    <div class="stat-card purple"><div class="stat-value" id="monthly-customers">0</div><div class="stat-label">Customers</div></div>
+  </div>
+
+  <!-- Additional Stats -->
+  <div class="card">
+    <div class="card-title">📈 Monthly Statistics</div>
+    <div class="summary-box">
+      <div class="summary-row"><span>🌾 Total Ghandham:</span><span id="monthly-ghandham">0 kg</span></div>
+      <div class="summary-row"><span>🥡 Total Pisaai:</span><span id="monthly-pisaai">0 kg</span></div>
+      <div class="summary-row"><span>👥 Unique Customers:</span><span id="monthly-unique">0</span></div>
+      <div class="summary-row"><span>⭐ Total Visits:</span><span id="monthly-visits">0</span></div>
+      <div class="summary-row"><span>🎁 Free Redeems:</span><span id="monthly-redeems">0</span></div>
+      <div class="summary-row" style="font-weight:700;color:var(--success);"><span>💰 Best Day:</span><span id="monthly-best-day">N/A</span></div>
+      <div class="summary-row" style="font-weight:700;color:var(--danger);"><span>📉 Worst Day:</span><span id="monthly-worst-day">N/A</span></div>
+    </div>
+  </div>
+
+  <!-- Daily Breakdown -->
+  <div class="card">
+    <div class="card-title">📅 Day-by-Day Breakdown</div>
+    <div id="monthly-daily-list"></div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="card">
+    <div class="card-title">📊 Previous Months Comparison</div>
+    <div id="monthly-comparison"></div>
+  </div>
+</div>
+
 <!-- SETTINGS -->
 <div id="section-settings" class="section">
   <div class="card">
@@ -345,7 +391,7 @@ body { background:linear-gradient(135deg,#f5f5dc 0%,#e8dcc8 100%); min-height:10
   <button class="nav-item active" data-section="home"><span class="icon">🏠</span><span>Home</span></button>
   <button class="nav-item" data-section="customers"><span class="icon">👥</span><span>Customers</span></button>
   <button class="nav-item" data-section="sales"><span class="icon">💰</span><span>Sales</span></button>
-  <button class="nav-item" data-section="transactions"><span class="icon">📋</span><span>History</span></button>
+  <button class="nav-item" data-section="reports"><span class="icon">📊</span><span>Reports</span></button>
   <button class="nav-item" data-section="settings"><span class="icon">⚙️</span><span>Settings</span></button>
 </div>
 
@@ -473,6 +519,7 @@ function switchSection(section) {
   if(section === 'settings') loadSettings();
   if(section === 'overdue') renderOverdue();
   if(section === 'sales') renderSales();
+  if(section === 'reports') initMonthlyReport();
 }
 
 // Attach click handlers to nav items
@@ -723,6 +770,136 @@ function renderSales() {
   document.getElementById('alltime-cust').textContent = allCust;
   document.getElementById('alltime-ghandham').textContent = allGhandham.toFixed(1);
   document.getElementById('alltime-pisaai').textContent = allPisaai.toFixed(1);
+}
+
+// ===================== MONTHLY REPORTS =====================
+function initMonthlyReport() {
+  const today = new Date();
+  const currentMonth = toDateInputValue(today).slice(0, 7);
+  document.getElementById('report-month').value = currentMonth;
+  renderMonthlyReport();
+}
+
+function renderMonthlyReport() {
+  const monthInput = document.getElementById('report-month').value;
+  if(!monthInput) return;
+  
+  const [year, month] = monthInput.split('-');
+  const monthStart = year + '-' + month + '-01';
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const monthEnd = year + '-' + month + '-' + String(daysInMonth).padStart(2, '0');
+  
+  // Get all sales for this month
+  const monthlySales = appData.dailySales.filter(s => s.date >= monthStart && s.date <= monthEnd);
+  const monthlyTx = appData.transactions.filter(t => {
+    const txDate = t.timestamp.slice(0, 10);
+    return txDate >= monthStart && txDate <= monthEnd;
+  });
+  
+  // Calculate totals
+  const totalCash = monthlySales.reduce((sum, s) => sum + s.cash, 0);
+  const totalCustomers = monthlySales.reduce((sum, s) => sum + s.customers, 0);
+  const totalGhandham = monthlySales.reduce((sum, s) => sum + s.ghandham, 0);
+  const totalPisaai = monthlySales.reduce((sum, s) => sum + s.pisaai, 0);
+  const daysWorked = monthlySales.length;
+  const avgDaily = daysWorked > 0 ? Math.round(totalCash / daysWorked) : 0;
+  
+  // Visits and redeems
+  const totalVisits = monthlyTx.filter(t => t.type === 'visit').length;
+  const totalRedeems = monthlyTx.filter(t => t.type === 'redeem').length;
+  const uniqueCustomers = new Set(monthlyTx.map(t => t.customerId)).size;
+  
+  // Best and worst days
+  let bestDay = null, worstDay = null, bestCash = 0, worstCash = Infinity;
+  monthlySales.forEach(s => {
+    if(s.cash > bestCash) { bestCash = s.cash; bestDay = s.date; }
+    if(s.cash < worstCash && s.cash > 0) { worstCash = s.cash; worstDay = s.date; }
+  });
+  
+  // Update display
+  document.getElementById('monthly-cash').textContent = 'Rs ' + totalCash.toLocaleString('ur-PK');
+  document.getElementById('monthly-days').textContent = daysWorked;
+  document.getElementById('monthly-avg').textContent = 'Rs ' + avgDaily.toLocaleString('ur-PK');
+  document.getElementById('monthly-customers').textContent = totalCustomers;
+  document.getElementById('monthly-ghandham').textContent = totalGhandham.toFixed(1) + ' kg';
+  document.getElementById('monthly-pisaai').textContent = totalPisaai.toFixed(1) + ' kg';
+  document.getElementById('monthly-unique').textContent = uniqueCustomers;
+  document.getElementById('monthly-visits').textContent = totalVisits;
+  document.getElementById('monthly-redeems').textContent = totalRedeems;
+  document.getElementById('monthly-best-day').textContent = bestDay ? 'Rs ' + bestCash + ' on ' + bestDay : 'N/A';
+  document.getElementById('monthly-worst-day').textContent = worstDay ? 'Rs ' + worstCash + ' on ' + worstDay : 'N/A';
+  
+  // Daily breakdown
+  const dailyList = document.getElementById('monthly-daily-list');
+  if(monthlySales.length === 0) {
+    dailyList.innerHTML = '<div class="empty-state" style="padding:16px;">Is month mein koi sales record nahi</div>';
+  } else {
+    dailyList.innerHTML = monthlySales.sort((a, b) => new Date(b.date) - new Date(a.date)).map(s => {
+      const dayName = new Date(s.date + 'T00:00:00').toLocaleDateString('ur-PK', {weekday: 'short'});
+      return '<div class="transaction-item">' +
+        '<div><div style="font-weight:700;font-size:14px;">' + s.date + ' (' + dayName + ')</div>' +
+        '<div class="tx-details">' + s.customers + ' customers • ' + s.ghandham + 'kg ghandham • ' + s.pisaai + 'kg pisaai</div>' +
+        (s.notes ? '<div style="font-size:11px;color:var(--primary);font-style:italic;">📝 ' + s.notes + '</div>' : '') + '</div>' +
+        '<div style="text-align:right;"><div class="tx-amount">Rs ' + s.cash.toLocaleString('ur-PK') + '</div></div></div>';
+    }).join('');
+  }
+  
+  // Previous months comparison
+  const comparisonEl = document.getElementById('monthly-comparison');
+  const prevMonths = [];
+  for(let i = 1; i <= 6; i++) {
+    const d = new Date(year, parseInt(month) - i, 1);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const mStart = y + '-' + m + '-01';
+    const mEnd = y + '-' + m + '-' + String(new Date(y, parseInt(m), 0).getDate()).padStart(2, '0');
+    const mSales = appData.dailySales.filter(s => s.date >= mStart && s.date <= mEnd);
+    const mCash = mSales.reduce((sum, s) => sum + s.cash, 0);
+    const mDays = mSales.length;
+    if(mDays > 0 || i === 1) {
+      prevMonths.push({ month: m + '/' + y, cash: mCash, days: mDays, avg: mDays > 0 ? Math.round(mCash / mDays) : 0 });
+    }
+  }
+  
+  comparisonEl.innerHTML = '<div class="summary-box">' +
+    prevMonths.map((m, idx) => {
+      const trend = idx > 0 ? (m.cash > prevMonths[idx-1].cash ? '📈' : m.cash < prevMonths[idx-1].cash ? '📉' : '➡️') : '';
+      return '<div class="summary-row"><span>' + trend + ' ' + m.month + '</span><span>Rs ' + m.cash.toLocaleString('ur-PK') + ' (' + m.days + ' days)</span></div>';
+    }).join('') + '</div>';
+}
+
+function exportMonthlyReport() {
+  const monthInput = document.getElementById('report-month').value;
+  if(!monthInput) { showToast('❌ Month select karein!'); return; }
+  
+  const [year, month] = monthInput.split('-');
+  const monthStart = year + '-' + month + '-01';
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const monthEnd = year + '-' + month + '-' + String(daysInMonth).padStart(2, '0');
+  
+  const monthlySales = appData.dailySales.filter(s => s.date >= monthStart && s.date <= monthEnd);
+  
+  const csv = [
+    ['MONTHLY SALES REPORT: ' + monthInput],
+    ['Generated: ' + new Date().toLocaleString('ur-PK')],
+    [''],
+    ['Date', 'Day', 'Cash (Rs)', 'Customers', 'Ghandham (kg)', 'Pisaai (kg)', 'Notes'],
+    ...monthlySales.sort((a, b) => a.date.localeCompare(b.date)).map(s => {
+      const dayName = new Date(s.date + 'T00:00:00').toLocaleDateString('ur-PK', {weekday: 'long'});
+      return [s.date, dayName, s.cash, s.customers, s.ghandham, s.pisaai, s.notes || ''];
+    }),
+    [''],
+    ['TOTAL', '', monthlySales.reduce((sum, s) => sum + s.cash, 0), monthlySales.reduce((sum, s) => sum + s.customers, 0), monthlySales.reduce((sum, s) => sum + s.ghandham, 0), monthlySales.reduce((sum, s) => sum + s.pisaai, 0), '']
+  ].map(row => row.join(',')).join('\n');
+  
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Monthly-Report-' + monthInput + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ Monthly report export ho gayi!');
 }
 
 function renderRangeTotal() {
