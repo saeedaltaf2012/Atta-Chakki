@@ -168,6 +168,38 @@ body { background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); min-height:10
 .sales-actions .btn-delete { background:linear-gradient(135deg,var(--danger) 0%,#dc2626 100%); color:white; }
 .sales-actions .btn-edit:hover { opacity:0.9; transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
 .sales-actions .btn-delete:hover { opacity:0.9; transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+
+/* ===== GANDAM BANK STYLES ===== */
+.gandam-info-box { background:linear-gradient(135deg,#fff9e6 0%,#fffbf0 100%); border:2px solid #f59e0b; border-radius:var(--radius); padding:20px; margin-bottom:16px; }
+.gandam-balance-display { background:linear-gradient(135deg,var(--gold) 0%,#fbbf24 100%); color:white; border-radius:var(--radius); padding:28px 24px; text-align:center; margin-bottom:20px; box-shadow:var(--shadow-lg); }
+.gandam-balance-display .balance-label { font-size:13px; opacity:0.9; letter-spacing:1px; text-transform:uppercase; font-weight:600; }
+.gandam-balance-display .balance-amount { font-size:36px; font-weight:800; margin-top:8px; text-shadow:0 2px 4px rgba(0,0,0,0.1); }
+.gandam-balance-display .balance-sub { font-size:12px; opacity:0.9; margin-top:6px; font-weight:500; }
+.gandam-loss-display { background:linear-gradient(135deg,#fef2f2 0%,#fff 100%); border:2px dashed #ef4444; border-radius:var(--radius); padding:16px; margin:12px 0; }
+.gandam-loss-display .loss-row { display:flex; justify-content:space-between; padding:8px 0; font-size:14px; font-weight:600; }
+.gandam-loss-display .loss-label { color:#ef4444; }
+.gandam-charges-box { background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%); border:2px solid #10b981; border-radius:var(--radius); padding:16px; margin:12px 0; }
+.gandam-charges-row { display:flex; justify-content:space-between; padding:10px 0; font-size:13px; border-bottom:1px solid #e0e7ff; }
+.gandam-charges-row:last-child { border-bottom:none; font-weight:700; color:var(--primary); }
+.gandam-charges-label { color:#64748b; }
+.gandam-charges-value { font-weight:700; color:var(--success); }
+.gandam-transaction-item { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:white; border-radius:12px; margin-bottom:10px; border-left:5px solid var(--gold); box-shadow:0 2px 8px rgba(0,0,0,0.05); font-size:13px; }
+.gandam-transaction-item.deposit { border-left-color:var(--success); }
+.gandam-transaction-item.withdrawal { border-left-color:var(--danger); }
+.gandam-transaction-item.milling { border-left-color:var(--primary); }
+.gandam-tx-date { font-size:11px; color:#94a3b8; margin-top:4px; font-weight:500; }
+.gandam-tx-type { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+.gandam-tx-in { color:var(--success); }
+.gandam-tx-out { color:var(--danger); }
+.gandam-ledger-header { display:grid; grid-template-columns:1fr 0.8fr 0.8fr 0.8fr 0.6fr; gap:8px; padding:12px; background:var(--primary); color:white; border-radius:10px; font-size:11px; font-weight:700; margin-bottom:10px; }
+.gandam-ledger-row { display:grid; grid-template-columns:1fr 0.8fr 0.8fr 0.8fr 0.6fr; gap:8px; padding:12px; background:white; border-radius:8px; margin-bottom:8px; border-left:4px solid var(--light); font-size:12px; }
+.gandam-ledger-row.deposit { border-left-color:var(--success); background:linear-gradient(135deg,#f0fdf4 0%,#fff 100%); }
+.gandam-ledger-row.withdrawal { border-left-color:var(--danger); background:linear-gradient(135deg,#fef2f2 0%,#fff 100%); }
+.gandam-ledger-row.milling { border-left-color:var(--primary); background:linear-gradient(135deg,#eff6ff 0%,#fff 100%); }
+.gandam-mann-kg { font-size:11px; color:#94a3b8; margin-top:2px; }
+.gandam-verification-box { background:linear-gradient(135deg,#eff6ff 0%,#f1f5f9 100%); border:2px solid var(--primary); border-radius:var(--radius); padding:24px; text-align:center; }
+.gandam-verification-box input { width:100%; margin:16px 0; }
+.gandam-no-access { background:#fef2f2; border:2px solid #ef4444; border-radius:var(--radius); padding:24px; text-align:center; color:#dc2626; }
 </style>
 </head>
 <body>
@@ -371,16 +403,29 @@ body { background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); min-height:10
 <div id="section-settings" class="section">
   <div class="card">
     <div class="card-title">⚙️ Program Settings</div>
-    <div class="input-group"><label>Kitne Visits pe 1 Free Pisaai?</label><input type="number" id="setting-visits" value="5" min="1"></div>
-    <div class="input-group"><label>Shop Name</label><input type="text" id="setting-shop" value="Kataf Atta Chakki"></div>
-    <div class="input-group"><label>Shop Phone / WhatsApp</label><input type="text" id="setting-phone" value="03001234567"></div>
+    <div class="input-group"><label>Kitne Visits pe 1 Free Pisaai?</label><input type="number" id="setting-visits" min="1"></div>
+    <div class="input-group"><label>Shop Name</label><input type="text" id="setting-shop"></div>
+    <div class="input-group"><label>Shop Phone / WhatsApp</label><input type="text" id="setting-phone"></div>
     <button class="btn btn-success" onclick="saveSettings()">💾 Save Settings</button>
   </div>
+
+  <!-- GANDAM BANK SETTINGS -->
+  <div class="card">
+    <div class="card-title">🌾 Gandam Bank Charges Settings</div>
+    <div class="input-row">
+      <div class="input-group"><label>Cleaning Charges Per Mann (Rs)</label><input type="number" id="setting-cleaning-rate" min="0" step="10"></div>
+      <div class="input-group"><label>Pisai Charges Per Mann (Rs)</label><input type="number" id="setting-pisai-rate" min="0" step="10"></div>
+    </div>
+    <div class="input-group"><label>1 Mann = KG</label><input type="number" id="setting-kg-per-mann" min="1" value="40"></div>
+    <button class="btn btn-success" onclick="saveGandamSettings()">💾 Save Gandam Settings</button>
+  </div>
+
   <div class="card">
     <div class="card-title">📤 Data Export</div>
     <button class="btn btn-primary" onclick="exportCustomers()">👥 Customers Export</button>
     <button class="btn btn-primary" onclick="exportTransactions()" style="margin-top:8px;">📋 Transactions Export</button>
     <button class="btn btn-gold" onclick="exportSales()" style="margin-top:8px;">💰 Sales Export</button>
+    <button class="btn btn-primary" onclick="exportGandamBank()" style="margin-top:8px;">🌾 Gandam Bank Export</button>
   </div>
   <div class="card">
     <div class="card-title">📥 Data Import (CSV)</div>
@@ -398,6 +443,188 @@ body { background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); min-height:10
   </div>
 </div>
 
+<!-- GANDAM BANK -->
+<div id="section-gandambank" class="section">
+  <!-- Gandam Bank Dashboard -->
+  <div id="gandambank-dashboard" style="display:block;">
+    <div class="stats-grid">
+      <div class="stat-card gold"><div class="stat-value" id="gandam-total-customers">0</div><div class="stat-label">Gandam Customers</div></div>
+      <div class="stat-card green"><div class="stat-value" id="gandam-total-stored">0</div><div class="stat-label">Total Stored</div></div>
+      <div class="stat-card blue"><div class="stat-value" id="gandam-today-deposit">0</div><div class="stat-label">Today Deposit</div></div>
+      <div class="stat-card purple"><div class="stat-value" id="gandam-today-revenue">Rs 0</div><div class="stat-label">Today Revenue</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌾 Quick Actions</div>
+      <button class="btn btn-primary" onclick="openGandamDeposit()"><span>📥</span> Gandam Jama Karein</button>
+      <button class="btn btn-success" onclick="openGandamMilling()" style="margin-top:8px;"><span>⚙️</span> Gandam Se Atta Piswayein</button>
+      <button class="btn btn-danger" onclick="openGandamWithdrawal()" style="margin-top:8px;"><span>📤</span> Gandam Wapas Lein</button>
+      <button class="btn btn-secondary" onclick="openGandamLedger()" style="margin-top:8px;"><span>📋</span> Gandam Bank Ledger</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">👤 Customer Gandam Accounts</div>
+      <div class="search-bar"><input type="text" id="gandamSearch" placeholder="Name ya phone se search..." oninput="renderGandamCustomers()"></div>
+      <div id="gandam-customers-list" class="customer-list"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Recent Gandam Transactions</div>
+      <div id="gandam-recent-transactions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GANDAM DEPOSIT MODAL -->
+<div id="modal-gandam-deposit" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-gandam-deposit')">
+  <div class="modal-sheet">
+    <div class="modal-header"><h2>📥 Gandam Jama Karein</h2><button class="close-btn" onclick="closeModal('modal-gandam-deposit')">&times;</button></div>
+    <div class="input-group"><label>Customer *</label>
+      <select id="gandam-deposit-customer">
+        <option value="">Select Customer</option>
+      </select>
+    </div>
+    <div class="input-group"><label>Date *</label><input type="date" id="gandam-deposit-date"></div>
+    <div class="input-row">
+      <div class="input-group"><label>Gross Weight (KG) *</label><input type="number" id="gandam-gross-weight" placeholder="e.g. 100" min="0" step="0.5"></div>
+      <div class="input-group"><label>Net Weight (KG) *</label><input type="number" id="gandam-net-weight" placeholder="e.g. 96" min="0" step="0.5"></div>
+    </div>
+    <div id="gandam-deposit-loss-display"></div>
+    <div id="gandam-deposit-charges-display"></div>
+    <div class="input-group"><label>Notes</label><textarea id="gandam-deposit-notes" placeholder="Optional notes..."></textarea></div>
+    <button class="btn btn-success" onclick="submitGandamDeposit()">✅ Gandam Jama Karein</button>
+  </div>
+</div>
+
+<!-- GANDAM MILLING MODAL -->
+<div id="modal-gandam-milling" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-gandam-milling')">
+  <div class="modal-sheet">
+    <div class="modal-header"><h2>⚙️ Gandam Se Atta Piswayein</h2><button class="close-btn" onclick="closeModal('modal-gandam-milling')">&times;</button></div>
+    <div class="input-group"><label>Customer *</label>
+      <select id="gandam-milling-customer" onchange="updateMillingCustomerBalance()">
+        <option value="">Select Customer</option>
+      </select>
+    </div>
+    <div class="gandam-info-box" id="milling-balance-info" style="display:none;"></div>
+    <div class="input-group"><label>Date *</label><input type="date" id="gandam-milling-date"></div>
+    <div class="input-group"><label>Gandam Quantity for Milling (KG) *</label><input type="number" id="gandam-milling-quantity" placeholder="e.g. 50" min="0" step="0.5" oninput="calculateMillingCharges()"></div>
+    <div id="gandam-milling-charges-display"></div>
+    <div class="input-group"><label>Notes</label><textarea id="gandam-milling-notes" placeholder="Optional notes..."></textarea></div>
+    <button class="btn btn-success" onclick="submitGandamMilling()">✅ Atta Piswayein</button>
+  </div>
+</div>
+
+<!-- GANDAM WITHDRAWAL MODAL -->
+<div id="modal-gandam-withdrawal" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-gandam-withdrawal')">
+  <div class="modal-sheet">
+    <div class="modal-header"><h2>📤 Gandam Wapas Lein</h2><button class="close-btn" onclick="closeModal('modal-gandam-withdrawal')">&times;</button></div>
+    <div class="input-group"><label>Customer *</label>
+      <select id="gandam-withdrawal-customer" onchange="updateWithdrawalCustomerBalance()">
+        <option value="">Select Customer</option>
+      </select>
+    </div>
+    <div class="gandam-info-box" id="withdrawal-balance-info" style="display:none;"></div>
+    <div class="input-group"><label>Date *</label><input type="date" id="gandam-withdrawal-date"></div>
+    <div class="input-group"><label>Quantity (KG) *</label><input type="number" id="gandam-withdrawal-quantity" placeholder="e.g. 20" min="0" step="0.5"></div>
+    <div class="input-group"><label>Notes</label><textarea id="gandam-withdrawal-notes" placeholder="Optional notes..."></textarea></div>
+    <button class="btn btn-danger" onclick="submitGandamWithdrawal()">📤 Gandam Wapas Lein</button>
+  </div>
+</div>
+
+<!-- GANDAM LEDGER MODAL -->
+<div id="modal-gandam-ledger" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-gandam-ledger')">
+  <div class="modal-sheet">
+    <div class="modal-header"><h2 id="ledger-customer-name">Gandam Bank Ledger</h2><button class="close-btn" onclick="closeModal('modal-gandam-ledger')">&times;</button></div>
+    <div class="gandam-info-box">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+        <div><div style="font-size:11px;color:#64748b;">Current Balance</div><div style="font-size:18px;font-weight:800;color:var(--primary);" id="ledger-current-balance">0 KG</div></div>
+        <div><div style="font-size:11px;color:#64748b;">Mann | KG</div><div style="font-size:14px;font-weight:700;" id="ledger-mann-kg">0 | 0</div></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="gandam-ledger-header">
+        <div>Date</div>
+        <div>Transaction</div>
+        <div>IN (+)</div>
+        <div>OUT (-)</div>
+        <div>Balance</div>
+      </div>
+      <div id="gandam-ledger-rows"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MY GANDAM ACCOUNT (Customer Self-Service) -->
+<div id="section-my-gandam" class="section">
+  <div class="card">
+    <div class="card-title">🔐 My Gandam Account</div>
+    <div class="gandam-verification-box">
+      <div style="font-size:16px;font-weight:700;color:var(--primary);margin-bottom:12px;">📱 Apna Registered Mobile Number Enter Karein</div>
+      <div class="input-group"><label>Mobile Number</label><input type="tel" id="self-service-phone" placeholder="03001234567" maxlength="11"></div>
+      <button class="btn btn-primary" onclick="verifySelfServiceAccess()" style="margin-top:12px;">🔍 Account Dekhen</button>
+    </div>
+  </div>
+
+  <div id="self-service-content" style="display:none;">
+    <div class="gandam-balance-display">
+      <div class="balance-label">🌾 Current Gandam Balance</div>
+      <div class="balance-amount" id="self-balance-kg">0 KG</div>
+      <div class="balance-sub" id="self-balance-mann">0 Mann 0 KG</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Aapka Gandam Account Summary</div>
+      <div class="summary-box">
+        <div class="summary-row"><span>👤 Name:</span><span id="self-name" style="font-weight:700;"></span></div>
+        <div class="summary-row"><span>📱 Phone:</span><span id="self-phone" style="font-weight:700;"></span></div>
+        <div class="summary-row"><span>🆔 Customer ID:</span><span id="self-id" style="font-weight:700;"></span></div>
+        <div class="summary-row"><span>🌾 Total Jama:</span><span id="self-total-deposit">0 KG</span></div>
+        <div class="summary-row"><span>⚙️ Atta Ke Liye Use:</span><span id="self-total-milling">0 KG</span></div>
+        <div class="summary-row"><span>📤 Wapas Li:</span><span id="self-total-withdrawal">0 KG</span></div>
+        <div class="summary-row"><span>🗑️ Total Cleaning Loss:</span><span id="self-total-loss">0 KG</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💰 Total Charges</div>
+      <div class="gandam-charges-box">
+        <div class="gandam-charges-row">
+          <span class="gandam-charges-label">Cleaning Charges:</span>
+          <span class="gandam-charges-value" id="self-cleaning-charges">Rs 0</span>
+        </div>
+        <div class="gandam-charges-row">
+          <span class="gandam-charges-label">Pisai Charges:</span>
+          <span class="gandam-charges-value" id="self-pisai-charges">Rs 0</span>
+        </div>
+        <div class="gandam-charges-row">
+          <span class="gandam-charges-label">💯 Total:</span>
+          <span class="gandam-charges-value" id="self-total-charges">Rs 0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Recent Transactions</div>
+      <div id="self-recent-transactions"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📜 Complete Gandam Ledger</div>
+      <div class="gandam-ledger-header">
+        <div>Date</div>
+        <div>Transaction</div>
+        <div>IN (+)</div>
+        <div>OUT (-)</div>
+        <div>Balance</div>
+      </div>
+      <div id="self-ledger-rows"></div>
+    </div>
+
+    <button class="btn btn-secondary" onclick="exitSelfService()" style="margin-top:20px;">← Back</button>
+  </div>
+</div>
+
+
 </div>
 
 <!-- BOTTOM NAV -->
@@ -405,6 +632,7 @@ body { background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); min-height:10
   <button class="nav-item active" data-section="home"><span class="icon">🏠</span><span>Home</span></button>
   <button class="nav-item" data-section="customers"><span class="icon">👥</span><span>Customers</span></button>
   <button class="nav-item" data-section="sales"><span class="icon">💰</span><span>Sales</span></button>
+  <button class="nav-item" data-section="gandambank"><span class="icon">🌾</span><span>Gandam</span></button>
   <button class="nav-item" data-section="reports"><span class="icon">📊</span><span>Reports</span></button>
   <button class="nav-item" data-section="settings"><span class="icon">⚙️</span><span>Settings</span></button>
 </div>
@@ -501,7 +729,16 @@ let appData = JSON.parse(localStorage.getItem('katafData')) || {
   customers: [],
   transactions: [],
   dailySales: [],
-  settings: { visitsForFree: 5, shopName: 'Kataf Atta Chakki', shopPhone: '03001234567' },
+  gandamBankTransactions: [],
+  settings: { 
+    visitsForFree: 5, 
+    shopName: 'Kataf Atta Chakki', 
+    shopPhone: '03001234567',
+    // Gandam Bank Settings
+    gandamCleaningChargesPerMann: 100,
+    gandamPisaiChargesPerMann: 150,
+    kgPerMann: 40
+  },
   nextId: 1001
 };
 let currentCustomerId = null;
@@ -530,10 +767,11 @@ function switchSection(section) {
   if(section === 'home') renderDashboard();
   if(section === 'customers') renderCustomers();
   if(section === 'transactions') renderAllTransactions();
-  if(section === 'settings') loadSettings();
+  if(section === 'settings') { loadSettings(); loadGandamSettings(); }
   if(section === 'overdue') renderOverdue();
   if(section === 'sales') renderSales();
   if(section === 'reports') initMonthlyReport();
+  if(section === 'gandambank') renderGandamBank();
 }
 
 // Attach click handlers to nav items
@@ -1519,10 +1757,18 @@ function renderAllTransactions() {
 
 // ===================== SETTINGS =====================
 function loadSettings() {
-  document.getElementById('setting-visits').value = appData.settings.visitsForFree;
-  document.getElementById('setting-shop').value = appData.settings.shopName;
-  document.getElementById('setting-phone').value = appData.settings.shopPhone;
+  // Make sure we're not modifying customer data when loading settings
+  const customerCountBefore = appData.customers.length;
+  
+  document.getElementById('setting-visits').value = appData.settings.visitsForFree || 5;
+  document.getElementById('setting-shop').value = appData.settings.shopName || 'Kataf Atta Chakki';
+  document.getElementById('setting-phone').value = appData.settings.shopPhone || '03001234567';
   updateAppTitle();
+  
+  // Verify customer count hasn't changed
+  if(appData.customers.length !== customerCountBefore) {
+    showToast('⚠️ System warning: Customer data inconsistency detected!');
+  }
 }
 
 function updateAppTitle() {
@@ -1531,14 +1777,28 @@ function updateAppTitle() {
 }
 
 function saveSettings() {
+  // Store current customer data backup to ensure no modification happens
+  const customerDataBackup = JSON.parse(JSON.stringify(appData.customers));
+  
   const visits = parseInt(document.getElementById('setting-visits').value);
   const shop = document.getElementById('setting-shop').value.trim();
   const phone = document.getElementById('setting-phone').value.trim();
   if(!visits || visits < 1) { showToast('❌ Valid visits number dalen!'); return; }
   if(!shop) { showToast('❌ Shop name zaroori hai!'); return; }
+  
+  // Only modify settings, never touch customer data
   appData.settings.visitsForFree = visits;
   appData.settings.shopName = shop;
   appData.settings.shopPhone = phone;
+  
+  // Verify customer data hasn't been modified
+  const customerDataAfter = JSON.stringify(appData.customers);
+  const customerDataBackupStr = JSON.stringify(customerDataBackup);
+  if(customerDataAfter !== customerDataBackupStr) {
+    // Restore if accidentally modified
+    appData.customers = customerDataBackup;
+  }
+  
   saveData();
   updateAppTitle();
   showToast('✅ Settings save ho gayi! App title bhi update ho gayi!');
@@ -1771,8 +2031,15 @@ function clearAllData() {
   if(!confirm('⚠️ SAB DATA DELETE HO JAYEGA! Yaqeen hai?')) return;
   if(!confirm('FINAL CONFIRMATION: Sab kuch delete karna hai?')) return;
   appData = {
-    customers: [], transactions: [], dailySales: [],
-    settings: { visitsForFree: 5, shopName: 'Kataf Atta Chakki', shopPhone: '03001234567' },
+    customers: [], transactions: [], dailySales: [], gandamBankTransactions: [],
+    settings: { 
+      visitsForFree: 5, 
+      shopName: 'Kataf Atta Chakki', 
+      shopPhone: '03001234567',
+      gandamCleaningChargesPerMann: 100,
+      gandamPisaiChargesPerMann: 150,
+      kgPerMann: 40
+    },
     nextId: 1001
   };
   saveData();
@@ -1784,9 +2051,552 @@ function closeModal(id) {
   document.getElementById(id).classList.remove('active');
 }
 
+// ===================== GANDAM BANK FUNCTIONS =====================
+
+function getGandamBalance(customerId) {
+  const txs = appData.gandamBankTransactions.filter(t => t.customerId === customerId).sort((a,b) => new Date(a.date) - new Date(b.date));
+  let balance = 0;
+  txs.forEach(t => {
+    if(t.type === 'deposit') balance += parseFloat(t.netWeight) || 0;
+    else if(t.type === 'milling') balance -= parseFloat(t.quantity) || 0;
+    else if(t.type === 'withdrawal') balance -= parseFloat(t.quantity) || 0;
+  });
+  return Math.max(0, balance);
+}
+
+function formatManKg(kg) {
+  const kgPerMann = appData.settings.kgPerMann || 40;
+  const mann = Math.floor(kg / kgPerMann);
+  const remainingKg = (kg % kgPerMann).toFixed(1);
+  return mann + ' Mann ' + remainingKg + ' KG';
+}
+
+function calculateCleaningLoss(grossWeight, netWeight) {
+  return Math.max(0, grossWeight - netWeight);
+}
+
+function calculateCleaningCharges(netWeight) {
+  const kgPerMann = appData.settings.kgPerMann || 40;
+  const cleaningRate = appData.settings.gandamCleaningChargesPerMann || 100;
+  const mann = netWeight / kgPerMann;
+  return Math.round(mann * cleaningRate);
+}
+
+function calculatePisaiCharges(quantity) {
+  const kgPerMann = appData.settings.kgPerMann || 40;
+  const pisaiRate = appData.settings.gandamPisaiChargesPerMann || 150;
+  const mann = quantity / kgPerMann;
+  return Math.round(mann * pisaiRate);
+}
+
+function openGandamDeposit() {
+  document.getElementById('gandam-deposit-customer').innerHTML = '<option value="">Select Customer</option>' +
+    appData.customers.map(c => '<option value="' + c.id + '">' + c.name + ' (' + c.phone + ')</option>').join('');
+  document.getElementById('gandam-deposit-date').value = toDateInputValue(new Date());
+  document.getElementById('gandam-gross-weight').value = '';
+  document.getElementById('gandam-net-weight').value = '';
+  document.getElementById('gandam-deposit-notes').value = '';
+  document.getElementById('gandam-deposit-loss-display').innerHTML = '';
+  document.getElementById('gandam-deposit-charges-display').innerHTML = '';
+  document.getElementById('modal-gandam-deposit').classList.add('active');
+}
+
+function renderGandamDepositInfo() {
+  const gross = parseFloat(document.getElementById('gandam-gross-weight').value) || 0;
+  const net = parseFloat(document.getElementById('gandam-net-weight').value) || 0;
+  const loss = calculateCleaningLoss(gross, net);
+  const charges = calculateCleaningCharges(net);
+  
+  if(gross > 0 && net > 0) {
+    document.getElementById('gandam-deposit-loss-display').innerHTML = 
+      '<div class="gandam-loss-display">' +
+      '<div class="gandam-loss-display .loss-row"><span class="gandam-loss-label">🌾 Gross Weight:</span><span>' + gross.toFixed(1) + ' KG</span></div>' +
+      '<div class="gandam-loss-row"><span class="gandam-loss-label">✅ Net Weight:</span><span>' + net.toFixed(1) + ' KG</span></div>' +
+      '<div class="gandam-loss-row"><span class="gandam-loss-label">🗑️ Cleaning Loss:</span><span style="color:var(--danger);font-weight:700;">' + loss.toFixed(1) + ' KG</span></div>' +
+      '</div>';
+    
+    document.getElementById('gandam-deposit-charges-display').innerHTML =
+      '<div class="gandam-charges-box">' +
+      '<div class="gandam-charges-row"><span class="gandam-charges-label">Cleaning Rate:</span><span>Rs ' + (appData.settings.gandamCleaningChargesPerMann || 100) + ' per Mann</span></div>' +
+      '<div class="gandam-charges-row"><span class="gandam-charges-label">Net Weight:</span><span>' + net.toFixed(1) + ' KG = ' + (net / (appData.settings.kgPerMann || 40)).toFixed(2) + ' Mann</span></div>' +
+      '<div class="gandam-charges-row"><span class="gandam-charges-label">💰 Cleaning Charges:</span><span class="gandam-charges-value">Rs ' + charges + '</span></div>' +
+      '</div>';
+  }
+}
+
+document.addEventListener('input', function(e) {
+  if(e.target.id === 'gandam-gross-weight' || e.target.id === 'gandam-net-weight') renderGandamDepositInfo();
+});
+
+function submitGandamDeposit() {
+  const customerId = parseInt(document.getElementById('gandam-deposit-customer').value);
+  const date = document.getElementById('gandam-deposit-date').value;
+  const grossWeight = parseFloat(document.getElementById('gandam-gross-weight').value) || 0;
+  const netWeight = parseFloat(document.getElementById('gandam-net-weight').value) || 0;
+  const notes = document.getElementById('gandam-deposit-notes').value.trim();
+
+  if(!customerId || !date || grossWeight <= 0 || netWeight <= 0) {
+    showToast('❌ Sab required fields fill karein!');
+    return;
+  }
+
+  if(netWeight > grossWeight) {
+    showToast('❌ Net weight gross weight se zyada nahi ho sakta!');
+    return;
+  }
+
+  const loss = calculateCleaningLoss(grossWeight, netWeight);
+  const charges = calculateCleaningCharges(netWeight);
+
+  const tx = {
+    id: Date.now(),
+    customerId: customerId,
+    type: 'deposit',
+    date: date,
+    grossWeight: grossWeight,
+    netWeight: netWeight,
+    cleaningLoss: loss,
+    cleaningCharges: charges,
+    notes: notes,
+    timestamp: new Date().toISOString()
+  };
+
+  appData.gandamBankTransactions.push(tx);
+  saveData();
+  closeModal('modal-gandam-deposit');
+  showToast('✅ Gandam jama ho gaya! Net: ' + netWeight + ' KG');
+  renderGandamBank();
+}
+
+function openGandamMilling() {
+  document.getElementById('gandam-milling-customer').innerHTML = '<option value="">Select Customer</option>' +
+    appData.customers.map(c => '<option value="' + c.id + '">' + c.name + ' (' + c.phone + ')</option>').join('');
+  document.getElementById('gandam-milling-date').value = toDateInputValue(new Date());
+  document.getElementById('gandam-milling-quantity').value = '';
+  document.getElementById('gandam-milling-notes').value = '';
+  document.getElementById('milling-balance-info').style.display = 'none';
+  document.getElementById('gandam-milling-charges-display').innerHTML = '';
+  document.getElementById('modal-gandam-milling').classList.add('active');
+}
+
+function updateMillingCustomerBalance() {
+  const customerId = parseInt(document.getElementById('gandam-milling-customer').value);
+  const balanceEl = document.getElementById('milling-balance-info');
+  
+  if(!customerId) {
+    balanceEl.style.display = 'none';
+    return;
+  }
+
+  const c = appData.customers.find(x => x.id === customerId);
+  const balance = getGandamBalance(customerId);
+  
+  balanceEl.style.display = 'block';
+  balanceEl.innerHTML = '<div style="font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;">📊 ' + c.name + ' Ka Gandam Balance</div>' +
+    '<div style="font-size:16px;font-weight:800;color:var(--gold);">' + balance.toFixed(1) + ' KG</div>' +
+    '<div style="font-size:11px;color:#94a3b8;">' + formatManKg(balance) + '</div>';
+}
+
+function calculateMillingCharges() {
+  const quantity = parseFloat(document.getElementById('gandam-milling-quantity').value) || 0;
+  const customerId = parseInt(document.getElementById('gandam-milling-customer').value);
+  const balance = getGandamBalance(customerId);
+  const charges = calculatePisaiCharges(quantity);
+  
+  const chargesEl = document.getElementById('gandam-milling-charges-display');
+  
+  if(quantity > 0) {
+    if(quantity > balance) {
+      chargesEl.innerHTML = '<div class="gandam-charges-box" style="border-color:var(--danger);background:#fef2f2;">' +
+        '<div style="color:var(--danger);font-weight:700;padding:10px;text-align:center;">❌ Insufficient Balance! Current: ' + balance.toFixed(1) + ' KG</div>' +
+        '</div>';
+      return;
+    }
+
+    chargesEl.innerHTML = 
+      '<div class="gandam-charges-box">' +
+      '<div class="gandam-charges-row"><span>Pisai Rate:</span><span>Rs ' + (appData.settings.gandamPisaiChargesPerMann || 150) + ' per Mann</span></div>' +
+      '<div class="gandam-charges-row"><span>Quantity:</span><span>' + quantity.toFixed(1) + ' KG = ' + (quantity / (appData.settings.kgPerMann || 40)).toFixed(2) + ' Mann</span></div>' +
+      '<div class="gandam-charges-row"><span>💰 Pisai Charges:</span><span class="gandam-charges-value">Rs ' + charges + '</span></div>' +
+      '<div class="gandam-charges-row"><span>✅ Balance After:</span><span style="color:var(--success);font-weight:700;">' + (balance - quantity).toFixed(1) + ' KG</span></div>' +
+      '</div>';
+  }
+}
+
+function submitGandamMilling() {
+  const customerId = parseInt(document.getElementById('gandam-milling-customer').value);
+  const date = document.getElementById('gandam-milling-date').value;
+  const quantity = parseFloat(document.getElementById('gandam-milling-quantity').value) || 0;
+  const notes = document.getElementById('gandam-milling-notes').value.trim();
+  const balance = getGandamBalance(customerId);
+
+  if(!customerId || !date || quantity <= 0) {
+    showToast('❌ Sab required fields fill karein!');
+    return;
+  }
+
+  if(quantity > balance) {
+    showToast('❌ Insufficient balance! Available: ' + balance.toFixed(1) + ' KG');
+    return;
+  }
+
+  const charges = calculatePisaiCharges(quantity);
+
+  const tx = {
+    id: Date.now(),
+    customerId: customerId,
+    type: 'milling',
+    date: date,
+    quantity: quantity,
+    pisaiCharges: charges,
+    notes: notes,
+    timestamp: new Date().toISOString()
+  };
+
+  appData.gandamBankTransactions.push(tx);
+  saveData();
+  closeModal('modal-gandam-milling');
+  showToast('✅ Gandam atta piswa di gayi! ' + quantity + ' KG use hua.');
+  renderGandamBank();
+}
+
+function openGandamWithdrawal() {
+  document.getElementById('gandam-withdrawal-customer').innerHTML = '<option value="">Select Customer</option>' +
+    appData.customers.map(c => '<option value="' + c.id + '">' + c.name + ' (' + c.phone + ')</option>').join('');
+  document.getElementById('gandam-withdrawal-date').value = toDateInputValue(new Date());
+  document.getElementById('gandam-withdrawal-quantity').value = '';
+  document.getElementById('gandam-withdrawal-notes').value = '';
+  document.getElementById('withdrawal-balance-info').style.display = 'none';
+  document.getElementById('modal-gandam-withdrawal').classList.add('active');
+}
+
+function updateWithdrawalCustomerBalance() {
+  const customerId = parseInt(document.getElementById('gandam-withdrawal-customer').value);
+  const balanceEl = document.getElementById('withdrawal-balance-info');
+  
+  if(!customerId) {
+    balanceEl.style.display = 'none';
+    return;
+  }
+
+  const c = appData.customers.find(x => x.id === customerId);
+  const balance = getGandamBalance(customerId);
+  
+  balanceEl.style.display = 'block';
+  balanceEl.innerHTML = '<div style="font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;">📊 ' + c.name + ' Ka Gandam Balance</div>' +
+    '<div style="font-size:16px;font-weight:800;color:var(--gold);">' + balance.toFixed(1) + ' KG</div>' +
+    '<div style="font-size:11px;color:#94a3b8;">' + formatManKg(balance) + '</div>';
+}
+
+function submitGandamWithdrawal() {
+  const customerId = parseInt(document.getElementById('gandam-withdrawal-customer').value);
+  const date = document.getElementById('gandam-withdrawal-date').value;
+  const quantity = parseFloat(document.getElementById('gandam-withdrawal-quantity').value) || 0;
+  const notes = document.getElementById('gandam-withdrawal-notes').value.trim();
+  const balance = getGandamBalance(customerId);
+
+  if(!customerId || !date || quantity <= 0) {
+    showToast('❌ Sab required fields fill karein!');
+    return;
+  }
+
+  if(quantity > balance) {
+    showToast('❌ Insufficient balance! Available: ' + balance.toFixed(1) + ' KG');
+    return;
+  }
+
+  const tx = {
+    id: Date.now(),
+    customerId: customerId,
+    type: 'withdrawal',
+    date: date,
+    quantity: quantity,
+    notes: notes,
+    timestamp: new Date().toISOString()
+  };
+
+  appData.gandamBankTransactions.push(tx);
+  saveData();
+  closeModal('modal-gandam-withdrawal');
+  showToast('✅ Gandam wapas di gayi! ' + quantity + ' KG nikala gaya.');
+  renderGandamBank();
+}
+
+function openGandamLedger() {
+  if(appData.customers.length === 0) {
+    showToast('❌ Pehle customer register karein!');
+    return;
+  }
+  
+  const customerId = appData.customers[0].id;
+  renderGandamLedger(customerId);
+}
+
+function renderGandamLedger(customerId) {
+  const c = appData.customers.find(x => x.id === customerId);
+  if(!c) return;
+
+  document.getElementById('ledger-customer-name').textContent = '📜 ' + c.name + ' - Gandam Bank Ledger';
+  
+  const txs = appData.gandamBankTransactions.filter(t => t.customerId === customerId).sort((a,b) => new Date(a.date) - new Date(b.date));
+  let balance = 0;
+  
+  let html = '';
+  txs.forEach(t => {
+    let icon = '', txType = '', inAmount = '', outAmount = '';
+    
+    if(t.type === 'deposit') {
+      icon = '📥';
+      txType = 'Gandam Deposit';
+      balance += parseFloat(t.netWeight) || 0;
+      inAmount = t.netWeight.toFixed(1);
+    } else if(t.type === 'milling') {
+      icon = '⚙️';
+      txType = 'Atta Piswai';
+      balance -= parseFloat(t.quantity) || 0;
+      outAmount = t.quantity.toFixed(1);
+    } else if(t.type === 'withdrawal') {
+      icon = '📤';
+      txType = 'Gandam Wapas';
+      balance -= parseFloat(t.quantity) || 0;
+      outAmount = t.quantity.toFixed(1);
+    }
+    
+    html += '<div class="gandam-ledger-row ' + t.type + '">' +
+      '<div style="font-weight:600;color:var(--dark);">' + t.date + '</div>' +
+      '<div style="font-size:11px;color:var(--primary);font-weight:700;">' + icon + ' ' + txType + '</div>' +
+      '<div style="color:var(--success);font-weight:700;">' + (inAmount ? inAmount + ' KG' : '-') + '</div>' +
+      '<div style="color:var(--danger);font-weight:700;">' + (outAmount ? outAmount + ' KG' : '-') + '</div>' +
+      '<div style="font-weight:700;color:var(--primary);">' + balance.toFixed(1) + ' KG</div>' +
+      '</div>';
+  });
+
+  document.getElementById('ledger-current-balance').textContent = balance.toFixed(1) + ' KG';
+  document.getElementById('ledger-mann-kg').textContent = formatManKg(balance);
+  document.getElementById('gandam-ledger-rows').innerHTML = html || '<div class="empty-state">Koi transaction nahi</div>';
+  document.getElementById('modal-gandam-ledger').classList.add('active');
+}
+
+function renderGandamBank() {
+  if(document.getElementById('section-gandambank').style.display !== 'block') return;
+  
+  const gandamCustomers = appData.customers.filter(c => {
+    const balance = getGandamBalance(c.id);
+    return balance > 0 || appData.gandamBankTransactions.some(t => t.customerId === c.id);
+  });
+
+  const totalStored = gandamCustomers.reduce((sum, c) => sum + getGandamBalance(c.id), 0);
+  const todayDate = toDateInputValue(new Date());
+  const todayDeposits = appData.gandamBankTransactions.filter(t => t.type === 'deposit' && t.date === todayDate);
+  const todayDepositTotal = todayDeposits.reduce((sum, t) => sum + parseFloat(t.netWeight), 0);
+  const todayCharges = todayDeposits.reduce((sum, t) => sum + (t.cleaningCharges || 0), 0) + 
+    appData.gandamBankTransactions.filter(t => t.type === 'milling' && t.date === todayDate).reduce((sum, t) => sum + (t.pisaiCharges || 0), 0);
+
+  document.getElementById('gandam-total-customers').textContent = gandamCustomers.length;
+  document.getElementById('gandam-total-stored').textContent = totalStored.toFixed(1) + ' KG';
+  document.getElementById('gandam-today-deposit').textContent = todayDepositTotal.toFixed(1) + ' KG';
+  document.getElementById('gandam-today-revenue').textContent = 'Rs ' + todayCharges.toLocaleString('ur-PK');
+
+  const search = document.getElementById('gandamSearch').value.toLowerCase();
+  let filtered = gandamCustomers.filter(c => c.name.toLowerCase().includes(search) || c.phone.includes(search));
+
+  const list = document.getElementById('gandam-customers-list');
+  if(filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div class="icon">🌾</div>Koi gandam customer nahi</div>';
+  } else {
+    list.innerHTML = filtered.map(c => {
+      const balance = getGandamBalance(c.id);
+      return '<div class="customer-row" onclick="renderGandamLedger(' + c.id + ')">' +
+        '<div class="customer-avatar" style="background:linear-gradient(135deg,var(--gold),#fbbf24);">🌾</div>' +
+        '<div class="customer-info"><h4>' + c.name + '</h4><p>📱 ' + c.phone + ' • Balance: ' + balance.toFixed(1) + ' KG (' + formatManKg(balance) + ')</p></div>' +
+        '<div class="customer-badge" style="background:linear-gradient(135deg,var(--gold),#fbbf24);color:white;">' + balance.toFixed(1) + ' KG</div></div>';
+    }).join('');
+  }
+
+  const recent = appData.gandamBankTransactions.slice(-10).reverse();
+  const recentEl = document.getElementById('gandam-recent-transactions');
+  if(recent.length === 0) {
+    recentEl.innerHTML = '<div class="empty-state" style="padding:16px;">Koi transaction nahi</div>';
+  } else {
+    recentEl.innerHTML = recent.map(t => {
+      const c = appData.customers.find(x => x.id === t.customerId);
+      let icon = '', color = '', desc = '';
+      if(t.type === 'deposit') { icon = '📥'; color = 'var(--success)'; desc = t.netWeight.toFixed(1) + ' KG jama'; }
+      else if(t.type === 'milling') { icon = '⚙️'; color = 'var(--primary)'; desc = t.quantity.toFixed(1) + ' KG piswai'; }
+      else { icon = '📤'; color = 'var(--danger)'; desc = t.quantity.toFixed(1) + ' KG wapas'; }
+      
+      return '<div class="gandam-transaction-item"><div><div style="font-weight:700;">' + (c ? c.name : 'Unknown') + '</div>' +
+        '<div class="gandam-tx-type" style="color:' + color + ';">' + icon + ' ' + desc + '</div>' +
+        '<div class="gandam-tx-date">' + t.date + '</div></div></div>';
+    }).join('');
+  }
+}
+
+function renderGandamCustomers() {
+  renderGandamBank();
+}
+
+function verifySelfServiceAccess() {
+  const phone = document.getElementById('self-service-phone').value.trim().replace(/\D/g, '');
+  
+  if(phone.length < 10) {
+    showToast('❌ Valid phone number enter karein!');
+    return;
+  }
+
+  const customer = appData.customers.find(c => c.phone.replace(/\D/g, '') === phone);
+  
+  if(!customer) {
+    showToast('❌ Ye phone number registered nahi hai!');
+    document.getElementById('self-service-content').style.display = 'none';
+    return;
+  }
+
+  renderSelfServiceAccount(customer);
+}
+
+function renderSelfServiceAccount(customer) {
+  const balance = getGandamBalance(customer.id);
+  const txs = appData.gandamBankTransactions.filter(t => t.customerId === customer.id).sort((a,b) => new Date(b.date) - new Date(a.date));
+  
+  let totalDeposit = 0, totalMilling = 0, totalWithdrawal = 0, totalLoss = 0;
+  let totalCleaningCharges = 0, totalPisaiCharges = 0;
+
+  txs.forEach(t => {
+    if(t.type === 'deposit') {
+      totalDeposit += parseFloat(t.netWeight) || 0;
+      totalLoss += parseFloat(t.cleaningLoss) || 0;
+      totalCleaningCharges += parseFloat(t.cleaningCharges) || 0;
+    } else if(t.type === 'milling') {
+      totalMilling += parseFloat(t.quantity) || 0;
+      totalPisaiCharges += parseFloat(t.pisaiCharges) || 0;
+    } else if(t.type === 'withdrawal') {
+      totalWithdrawal += parseFloat(t.quantity) || 0;
+    }
+  });
+
+  document.getElementById('self-balance-kg').textContent = balance.toFixed(1) + ' KG';
+  document.getElementById('self-balance-mann').textContent = formatManKg(balance);
+  document.getElementById('self-name').textContent = customer.name;
+  document.getElementById('self-phone').textContent = customer.phone;
+  document.getElementById('self-id').textContent = customer.id;
+  document.getElementById('self-total-deposit').textContent = totalDeposit.toFixed(1) + ' KG';
+  document.getElementById('self-total-milling').textContent = totalMilling.toFixed(1) + ' KG';
+  document.getElementById('self-total-withdrawal').textContent = totalWithdrawal.toFixed(1) + ' KG';
+  document.getElementById('self-total-loss').textContent = totalLoss.toFixed(1) + ' KG';
+  document.getElementById('self-cleaning-charges').textContent = 'Rs ' + totalCleaningCharges.toLocaleString('ur-PK');
+  document.getElementById('self-pisai-charges').textContent = 'Rs ' + totalPisaiCharges.toLocaleString('ur-PK');
+  document.getElementById('self-total-charges').textContent = 'Rs ' + (totalCleaningCharges + totalPisaiCharges).toLocaleString('ur-PK');
+
+  const recentTxs = txs.slice(0, 5);
+  const recentEl = document.getElementById('self-recent-transactions');
+  if(recentTxs.length === 0) {
+    recentEl.innerHTML = '<div class="empty-state" style="padding:16px;">Koi transaction nahi</div>';
+  } else {
+    recentEl.innerHTML = recentTxs.map(t => {
+      let icon = '', desc = '';
+      if(t.type === 'deposit') { icon = '📥'; desc = 'Gandam Jama: ' + t.netWeight.toFixed(1) + ' KG'; }
+      else if(t.type === 'milling') { icon = '⚙️'; desc = 'Atta Piswai: ' + t.quantity.toFixed(1) + ' KG'; }
+      else { icon = '📤'; desc = 'Gandam Wapas: ' + t.quantity.toFixed(1) + ' KG'; }
+      return '<div class="gandam-transaction-item"><div><div style="font-weight:700;">' + icon + ' ' + desc + '</div>' +
+        '<div class="gandam-tx-date">' + t.date + '</div></div></div>';
+    }).join('');
+  }
+
+  // Render full ledger
+  let ledgerHtml = '';
+  let runningBalance = 0;
+  txs.sort((a,b) => new Date(a.date) - new Date(b.date)).forEach(t => {
+    let icon = '', txType = '', inAmount = '', outAmount = '';
+    if(t.type === 'deposit') {
+      icon = '📥'; txType = 'Gandam Deposit'; runningBalance += parseFloat(t.netWeight) || 0; inAmount = t.netWeight.toFixed(1);
+    } else if(t.type === 'milling') {
+      icon = '⚙️'; txType = 'Atta Piswai'; runningBalance -= parseFloat(t.quantity) || 0; outAmount = t.quantity.toFixed(1);
+    } else if(t.type === 'withdrawal') {
+      icon = '📤'; txType = 'Gandam Wapas'; runningBalance -= parseFloat(t.quantity) || 0; outAmount = t.quantity.toFixed(1);
+    }
+    ledgerHtml += '<div class="gandam-ledger-row ' + t.type + '">' +
+      '<div style="font-weight:600;color:var(--dark);">' + t.date + '</div>' +
+      '<div style="font-size:11px;color:var(--primary);font-weight:700;">' + icon + ' ' + txType + '</div>' +
+      '<div style="color:var(--success);font-weight:700;">' + (inAmount ? inAmount + ' KG' : '-') + '</div>' +
+      '<div style="color:var(--danger);font-weight:700;">' + (outAmount ? outAmount + ' KG' : '-') + '</div>' +
+      '<div style="font-weight:700;color:var(--primary);">' + runningBalance.toFixed(1) + ' KG</div>' +
+      '</div>';
+  });
+
+  document.getElementById('self-ledger-rows').innerHTML = ledgerHtml || '<div class="empty-state">Koi transaction nahi</div>';
+  document.getElementById('self-service-content').style.display = 'block';
+}
+
+function exitSelfService() {
+  document.getElementById('self-service-phone').value = '';
+  document.getElementById('self-service-content').style.display = 'none';
+}
+
+function saveGandamSettings() {
+  const cleaningRate = parseInt(document.getElementById('setting-cleaning-rate').value) || 100;
+  const pisaiRate = parseInt(document.getElementById('setting-pisai-rate').value) || 150;
+  const kgPerMann = parseInt(document.getElementById('setting-kg-per-mann').value) || 40;
+
+  appData.settings.gandamCleaningChargesPerMann = cleaningRate;
+  appData.settings.gandamPisaiChargesPerMann = pisaiRate;
+  appData.settings.kgPerMann = kgPerMann;
+  
+  saveData();
+  showToast('✅ Gandam Bank settings save ho gayi!');
+}
+
+function loadGandamSettings() {
+  document.getElementById('setting-cleaning-rate').value = appData.settings.gandamCleaningChargesPerMann || 100;
+  document.getElementById('setting-pisai-rate').value = appData.settings.gandamPisaiChargesPerMann || 150;
+  document.getElementById('setting-kg-per-mann').value = appData.settings.kgPerMann || 40;
+}
+
+function exportGandamBank() {
+  const csv = [
+    ['Date', 'Customer ID', 'Customer', 'Transaction Type', 'Gross/Quantity (KG)', 'Net/Milled (KG)', 'Cleaning Loss (KG)', 'Cleaning Charges', 'Pisai Charges', 'Notes'],
+    ...appData.gandamBankTransactions.map(t => {
+      const c = appData.customers.find(x => x.id === t.customerId) || {};
+      let grossQty = '', netQty = '', loss = '', cleanCharge = '', pisaiCharge = '';
+      let txType = '';
+      
+      if(t.type === 'deposit') {
+        txType = 'Deposit';
+        grossQty = t.grossWeight || '';
+        netQty = t.netWeight || '';
+        loss = t.cleaningLoss || '';
+        cleanCharge = t.cleaningCharges || '';
+      } else if(t.type === 'milling') {
+        txType = 'Milling';
+        netQty = t.quantity || '';
+        pisaiCharge = t.pisaiCharges || '';
+      } else if(t.type === 'withdrawal') {
+        txType = 'Withdrawal';
+        netQty = t.quantity || '';
+      }
+
+      return [t.date, t.customerId, c.name || '', txType, grossQty, netQty, loss, cleanCharge, pisaiCharge, t.notes || ''];
+    })
+  ].map(row => row.join(',')).join('\n');
+
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Gandam-Bank-' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ Gandam Bank export ho gaya!');
+}
+
+
+
 // ===================== INIT =====================
 document.getElementById('sales-date').value = toDateInputValue(new Date());
 document.getElementById('sales-entry-date').value = toDateInputValue(new Date());
+document.getElementById('gandam-deposit-date').value = toDateInputValue(new Date());
+document.getElementById('gandam-milling-date').value = toDateInputValue(new Date());
+document.getElementById('gandam-withdrawal-date').value = toDateInputValue(new Date());
 
 // Set default range dates (last 30 days to today)
 const today = new Date();
@@ -1794,6 +2604,9 @@ const thirtyDaysAgo = new Date();
 thirtyDaysAgo.setDate(today.getDate() - 30);
 document.getElementById('range-from').value = toDateInputValue(thirtyDaysAgo);
 document.getElementById('range-to').value = toDateInputValue(today);
+
+// Initialize Gandam Bank settings
+loadGandamSettings();
 
 renderDashboard();
 </script>
